@@ -4,6 +4,8 @@ import { useEffect } from 'react';
 import { withAuthenticator } from '@aws-amplify/ui-react';
 import '@aws-amplify/ui-react/styles.css';
 
+import { Button, Divider, Message, TextAreaField } from '@aws-amplify/ui-react';
+
 import awsExports from './aws-exports';
 
 Amplify.configure(awsExports);
@@ -63,29 +65,37 @@ function App({ signOut, user }) {
   }, []); // Empty dependency array ensures that this effect runs only once during mount
   return (
     <div className="App">
+      <div>
       <h1>Hello {user.username}</h1>
-      <button onClick={signOut}>Sign out</button>
-      <div className="row">
-        <div id="publisher" className="col ml-5 mt-5 mb-5 mr-3" style={{"borderStyle": "solid", "borderWidth": "2px"}}>
+      <Button onClick={signOut}>Sign out</Button>
           <h2>Publisher</h2>
           <p>The box below can be used to publish messages back to your devices by publishing to the topic <b>{PUB_TOPIC}</b></p>
-          <h5>Message: </h5>
-          <input type="text" className="form-control" id="msg" name="msg" placeholder="Enter Message Here"></input>
-          <br></br>
-          <button className="btn btn-primary" onClick={SendMessage}>Send Message</button>
+          <TextAreaField
+            descriptiveText="Enter a message to publish to your devices"
+            label="Publish Message"
+            name="Message"
+            placeholder="id: *, msg: *"
+            rows={3}/>
+          <Button className="btn btn-primary" onClick={SendMessage}>Publish Message</Button>
           <div id='returnMsg'></div>
           <br></br>
           <h3>Sent Messages:</h3>
           <p>Your sent messages will appear here</p>
-          <div id='sentMsg' className="overflow-auto mb-5 border" syle={{"maxHeight": "220px"}}></div>
+          <Message
+            id='sentMsg'
+            variation="filled"
+            heading="Sent Message">
+          </Message>
         </div>
-        <br></br><br></br>
-        <div id="subscriber" className="col mt-5 mr-5 mb-5" style={{"borderStyle": "solid", "borderWidth": "2px"}}>
+        <div id="subscriber">
           <h2>Subscriber</h2>
           <p>New messages from your device(s) that publish to the topic <b>{SUB_TOPIC}</b> will appear in the box below</p>
-          <div id="incomingMsg" className="overflow-auto border" style={{"maxHeight": "200px"}}></div>
+          <Message
+            id='incomingMsg'
+            variation="filled"
+            heading="Incoming Messages">
+          </Message>
         </div>
-      </div>
     </div>
   );
 }

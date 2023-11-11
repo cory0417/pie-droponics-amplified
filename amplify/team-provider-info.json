@@ -20,6 +20,9 @@
           "appId": "d2nwe6bk58mwyp",
           "type": "manual"
         }
+      },
+      "api": {
+        "piedroponics": {}
       }
     }
   }

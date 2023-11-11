@@ -1,0 +1,26 @@
+# This "input" configures a global authorization rule to enable public access to
+# all models in this schema. Learn more about authorization rules here: https://docs.amplify.aws/cli/graphql/authorization-rules
+input AMPLIFY {
+  globalAuthRule: AuthRule = { allow: public }
+} # FOR TESTING ONLY!
+type SensorLog @model {
+  id: ID!
+  sensor_name: String!
+  value: Float!
+  timestamp: String!
+}
+
+type CmdLog @model {
+  id: ID!
+  cmd: Int!
+  timestamp: String!
+}
+
+type Schedule @model {
+  id: ID!
+  actuator_name: String!
+  start_time: String!
+  period: Float!
+  cmd: Int!
+  timestamp: String!
+}

@@ -21,7 +21,7 @@ function TopicSubscriber ({topic}) {
         console.log('Message received', payload);
         let id = payload.value.id;
         let topic = payload.value[Object.getOwnPropertySymbols(payload.value)[0]];
-        let msg = payload.value.msg;
+        let msg = payload.value.value;
         setSubMsgs((prevSubMsgs) => [...prevSubMsgs, { topic: topic, id: id, msg: msg}]);
       };
     

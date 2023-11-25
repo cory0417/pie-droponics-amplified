@@ -12,8 +12,8 @@ import Title from './components/Dashboard/Title';
 
 Amplify.configure(awsExports);
 
-var PUB_TOPIC = 'test/pub';
-var SUB_TOPIC = 'test/sub';
+var PUB_TOPIC = 'cmd/';
+var SUB_TOPIC = 'sensor/';
 
 // Apply plugin with configuration
 Amplify.addPluggable(

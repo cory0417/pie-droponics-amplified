@@ -22,19 +22,19 @@ export declare type ValidationResponse = {
 };
 export declare type ValidationFunction<T> = (value: T, validationResponse: ValidationResponse) => ValidationResponse | Promise<ValidationResponse>;
 export declare type SensorLogUpdateFormInputValues = {
-    sensor_name?: string;
+    target?: string;
     value?: number;
-    timestamp?: string;
+    timestamp?: number;
 };
 export declare type SensorLogUpdateFormValidationValues = {
-    sensor_name?: ValidationFunction<string>;
+    target?: ValidationFunction<string>;
     value?: ValidationFunction<number>;
-    timestamp?: ValidationFunction<string>;
+    timestamp?: ValidationFunction<number>;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type SensorLogUpdateFormOverridesProps = {
     SensorLogUpdateFormGrid?: PrimitiveOverrideProps<GridProps>;
-    sensor_name?: PrimitiveOverrideProps<TextFieldProps>;
+    target?: PrimitiveOverrideProps<TextFieldProps>;
     value?: PrimitiveOverrideProps<TextFieldProps>;
     timestamp?: PrimitiveOverrideProps<TextFieldProps>;
 } & EscapeHatchProps;

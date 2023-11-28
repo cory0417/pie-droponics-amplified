@@ -1,0 +1,27 @@
+enum Action {
+  ON
+  OFF
+}
+
+type CmdLog @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  target: String!
+  start_time: String!
+  on_interval: String!
+  off_interval: String!
+  timestamp: AWSTimestamp!
+}
+
+type ActionLog @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  target: String!
+  action: Action!
+  timestamp: AWSTimestamp!
+}
+
+type SensorLog @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  target: String!
+  value: Float!
+  timestamp: AWSTimestamp!
+}

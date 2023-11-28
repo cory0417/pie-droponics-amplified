@@ -1,13 +1,103 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const onCreateCmdLog = /* GraphQL */ `
+  subscription OnCreateCmdLog($filter: ModelSubscriptionCmdLogFilterInput) {
+    onCreateCmdLog(filter: $filter) {
+      id
+      target
+      start_time
+      on_interval
+      off_interval
+      timestamp
+      createdAt
+      updatedAt
+      __typename
+    }
+  }
+`;
+export const onUpdateCmdLog = /* GraphQL */ `
+  subscription OnUpdateCmdLog($filter: ModelSubscriptionCmdLogFilterInput) {
+    onUpdateCmdLog(filter: $filter) {
+      id
+      target
+      start_time
+      on_interval
+      off_interval
+      timestamp
+      createdAt
+      updatedAt
+      __typename
+    }
+  }
+`;
+export const onDeleteCmdLog = /* GraphQL */ `
+  subscription OnDeleteCmdLog($filter: ModelSubscriptionCmdLogFilterInput) {
+    onDeleteCmdLog(filter: $filter) {
+      id
+      target
+      start_time
+      on_interval
+      off_interval
+      timestamp
+      createdAt
+      updatedAt
+      __typename
+    }
+  }
+`;
+export const onCreateActionLog = /* GraphQL */ `
+  subscription OnCreateActionLog(
+    $filter: ModelSubscriptionActionLogFilterInput
+  ) {
+    onCreateActionLog(filter: $filter) {
+      id
+      target
+      action
+      timestamp
+      createdAt
+      updatedAt
+      __typename
+    }
+  }
+`;
+export const onUpdateActionLog = /* GraphQL */ `
+  subscription OnUpdateActionLog(
+    $filter: ModelSubscriptionActionLogFilterInput
+  ) {
+    onUpdateActionLog(filter: $filter) {
+      id
+      target
+      action
+      timestamp
+      createdAt
+      updatedAt
+      __typename
+    }
+  }
+`;
+export const onDeleteActionLog = /* GraphQL */ `
+  subscription OnDeleteActionLog(
+    $filter: ModelSubscriptionActionLogFilterInput
+  ) {
+    onDeleteActionLog(filter: $filter) {
+      id
+      target
+      action
+      timestamp
+      createdAt
+      updatedAt
+      __typename
+    }
+  }
+`;
 export const onCreateSensorLog = /* GraphQL */ `
   subscription OnCreateSensorLog(
     $filter: ModelSubscriptionSensorLogFilterInput
   ) {
     onCreateSensorLog(filter: $filter) {
       id
-      sensor_name
+      target
       value
       timestamp
       createdAt
@@ -22,7 +112,7 @@ export const onUpdateSensorLog = /* GraphQL */ `
   ) {
     onUpdateSensorLog(filter: $filter) {
       id
-      sensor_name
+      target
       value
       timestamp
       createdAt
@@ -37,89 +127,8 @@ export const onDeleteSensorLog = /* GraphQL */ `
   ) {
     onDeleteSensorLog(filter: $filter) {
       id
-      sensor_name
+      target
       value
-      timestamp
-      createdAt
-      updatedAt
-      __typename
-    }
-  }
-`;
-export const onCreateCmdLog = /* GraphQL */ `
-  subscription OnCreateCmdLog($filter: ModelSubscriptionCmdLogFilterInput) {
-    onCreateCmdLog(filter: $filter) {
-      id
-      cmd
-      timestamp
-      createdAt
-      updatedAt
-      __typename
-    }
-  }
-`;
-export const onUpdateCmdLog = /* GraphQL */ `
-  subscription OnUpdateCmdLog($filter: ModelSubscriptionCmdLogFilterInput) {
-    onUpdateCmdLog(filter: $filter) {
-      id
-      cmd
-      timestamp
-      createdAt
-      updatedAt
-      __typename
-    }
-  }
-`;
-export const onDeleteCmdLog = /* GraphQL */ `
-  subscription OnDeleteCmdLog($filter: ModelSubscriptionCmdLogFilterInput) {
-    onDeleteCmdLog(filter: $filter) {
-      id
-      cmd
-      timestamp
-      createdAt
-      updatedAt
-      __typename
-    }
-  }
-`;
-export const onCreateSchedule = /* GraphQL */ `
-  subscription OnCreateSchedule($filter: ModelSubscriptionScheduleFilterInput) {
-    onCreateSchedule(filter: $filter) {
-      id
-      actuator_name
-      start_time
-      period
-      cmd
-      timestamp
-      createdAt
-      updatedAt
-      __typename
-    }
-  }
-`;
-export const onUpdateSchedule = /* GraphQL */ `
-  subscription OnUpdateSchedule($filter: ModelSubscriptionScheduleFilterInput) {
-    onUpdateSchedule(filter: $filter) {
-      id
-      actuator_name
-      start_time
-      period
-      cmd
-      timestamp
-      createdAt
-      updatedAt
-      __typename
-    }
-  }
-`;
-export const onDeleteSchedule = /* GraphQL */ `
-  subscription OnDeleteSchedule($filter: ModelSubscriptionScheduleFilterInput) {
-    onDeleteSchedule(filter: $filter) {
-      id
-      actuator_name
-      start_time
-      period
-      cmd
       timestamp
       createdAt
       updatedAt

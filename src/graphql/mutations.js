@@ -1,6 +1,108 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const createCmdLog = /* GraphQL */ `
+  mutation CreateCmdLog(
+    $input: CreateCmdLogInput!
+    $condition: ModelCmdLogConditionInput
+  ) {
+    createCmdLog(input: $input, condition: $condition) {
+      id
+      target
+      start_time
+      on_interval
+      off_interval
+      timestamp
+      createdAt
+      updatedAt
+      __typename
+    }
+  }
+`;
+export const updateCmdLog = /* GraphQL */ `
+  mutation UpdateCmdLog(
+    $input: UpdateCmdLogInput!
+    $condition: ModelCmdLogConditionInput
+  ) {
+    updateCmdLog(input: $input, condition: $condition) {
+      id
+      target
+      start_time
+      on_interval
+      off_interval
+      timestamp
+      createdAt
+      updatedAt
+      __typename
+    }
+  }
+`;
+export const deleteCmdLog = /* GraphQL */ `
+  mutation DeleteCmdLog(
+    $input: DeleteCmdLogInput!
+    $condition: ModelCmdLogConditionInput
+  ) {
+    deleteCmdLog(input: $input, condition: $condition) {
+      id
+      target
+      start_time
+      on_interval
+      off_interval
+      timestamp
+      createdAt
+      updatedAt
+      __typename
+    }
+  }
+`;
+export const createActionLog = /* GraphQL */ `
+  mutation CreateActionLog(
+    $input: CreateActionLogInput!
+    $condition: ModelActionLogConditionInput
+  ) {
+    createActionLog(input: $input, condition: $condition) {
+      id
+      target
+      action
+      timestamp
+      createdAt
+      updatedAt
+      __typename
+    }
+  }
+`;
+export const updateActionLog = /* GraphQL */ `
+  mutation UpdateActionLog(
+    $input: UpdateActionLogInput!
+    $condition: ModelActionLogConditionInput
+  ) {
+    updateActionLog(input: $input, condition: $condition) {
+      id
+      target
+      action
+      timestamp
+      createdAt
+      updatedAt
+      __typename
+    }
+  }
+`;
+export const deleteActionLog = /* GraphQL */ `
+  mutation DeleteActionLog(
+    $input: DeleteActionLogInput!
+    $condition: ModelActionLogConditionInput
+  ) {
+    deleteActionLog(input: $input, condition: $condition) {
+      id
+      target
+      action
+      timestamp
+      createdAt
+      updatedAt
+      __typename
+    }
+  }
+`;
 export const createSensorLog = /* GraphQL */ `
   mutation CreateSensorLog(
     $input: CreateSensorLogInput!
@@ -8,7 +110,7 @@ export const createSensorLog = /* GraphQL */ `
   ) {
     createSensorLog(input: $input, condition: $condition) {
       id
-      sensor_name
+      target
       value
       timestamp
       createdAt
@@ -24,7 +126,7 @@ export const updateSensorLog = /* GraphQL */ `
   ) {
     updateSensorLog(input: $input, condition: $condition) {
       id
-      sensor_name
+      target
       value
       timestamp
       createdAt
@@ -40,107 +142,8 @@ export const deleteSensorLog = /* GraphQL */ `
   ) {
     deleteSensorLog(input: $input, condition: $condition) {
       id
-      sensor_name
+      target
       value
-      timestamp
-      createdAt
-      updatedAt
-      __typename
-    }
-  }
-`;
-export const createCmdLog = /* GraphQL */ `
-  mutation CreateCmdLog(
-    $input: CreateCmdLogInput!
-    $condition: ModelCmdLogConditionInput
-  ) {
-    createCmdLog(input: $input, condition: $condition) {
-      id
-      cmd
-      timestamp
-      createdAt
-      updatedAt
-      __typename
-    }
-  }
-`;
-export const updateCmdLog = /* GraphQL */ `
-  mutation UpdateCmdLog(
-    $input: UpdateCmdLogInput!
-    $condition: ModelCmdLogConditionInput
-  ) {
-    updateCmdLog(input: $input, condition: $condition) {
-      id
-      cmd
-      timestamp
-      createdAt
-      updatedAt
-      __typename
-    }
-  }
-`;
-export const deleteCmdLog = /* GraphQL */ `
-  mutation DeleteCmdLog(
-    $input: DeleteCmdLogInput!
-    $condition: ModelCmdLogConditionInput
-  ) {
-    deleteCmdLog(input: $input, condition: $condition) {
-      id
-      cmd
-      timestamp
-      createdAt
-      updatedAt
-      __typename
-    }
-  }
-`;
-export const createSchedule = /* GraphQL */ `
-  mutation CreateSchedule(
-    $input: CreateScheduleInput!
-    $condition: ModelScheduleConditionInput
-  ) {
-    createSchedule(input: $input, condition: $condition) {
-      id
-      actuator_name
-      start_time
-      period
-      cmd
-      timestamp
-      createdAt
-      updatedAt
-      __typename
-    }
-  }
-`;
-export const updateSchedule = /* GraphQL */ `
-  mutation UpdateSchedule(
-    $input: UpdateScheduleInput!
-    $condition: ModelScheduleConditionInput
-  ) {
-    updateSchedule(input: $input, condition: $condition) {
-      id
-      actuator_name
-      start_time
-      period
-      cmd
-      timestamp
-      createdAt
-      updatedAt
-      __typename
-    }
-  }
-`;
-export const deleteSchedule = /* GraphQL */ `
-  mutation DeleteSchedule(
-    $input: DeleteScheduleInput!
-    $condition: ModelScheduleConditionInput
-  ) {
-    deleteSchedule(input: $input, condition: $condition) {
-      id
-      actuator_name
-      start_time
-      period
-      cmd
       timestamp
       createdAt
       updatedAt

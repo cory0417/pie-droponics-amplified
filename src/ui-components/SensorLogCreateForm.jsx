@@ -22,24 +22,22 @@ export default function SensorLogCreateForm(props) {
     ...rest
   } = props;
   const initialValues = {
-    sensor_name: "",
+    target: "",
     value: "",
     timestamp: "",
   };
-  const [sensor_name, setSensor_name] = React.useState(
-    initialValues.sensor_name
-  );
+  const [target, setTarget] = React.useState(initialValues.target);
   const [value, setValue] = React.useState(initialValues.value);
   const [timestamp, setTimestamp] = React.useState(initialValues.timestamp);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
-    setSensor_name(initialValues.sensor_name);
+    setTarget(initialValues.target);
     setValue(initialValues.value);
     setTimestamp(initialValues.timestamp);
     setErrors({});
   };
   const validations = {
-    sensor_name: [{ type: "Required" }],
+    target: [{ type: "Required" }],
     value: [{ type: "Required" }],
     timestamp: [{ type: "Required" }],
   };
@@ -60,6 +58,29 @@ export default function SensorLogCreateForm(props) {
     setErrors((errors) => ({ ...errors, [fieldName]: validationResponse }));
     return validationResponse;
   };
+  const convertTimeStampToDate = (ts) => {
+    if (Math.abs(Date.now() - ts) < Math.abs(Date.now() - ts * 1000)) {
+      return new Date(ts);
+    }
+    return new Date(ts * 1000);
+  };
+  const convertToLocal = (date) => {
+    const df = new Intl.DateTimeFormat("default", {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+      calendar: "iso8601",
+      numberingSystem: "latn",
+      hourCycle: "h23",
+    });
+    const parts = df.formatToParts(date).reduce((acc, part) => {
+      acc[part.type] = part.value;
+      return acc;
+    }, {});
+    return `${parts.year}-${parts.month}-${parts.day}T${parts.hour}:${parts.minute}`;
+  };
   return (
     <Grid
       as="form"
@@ -69,7 +90,7 @@ export default function SensorLogCreateForm(props) {
       onSubmit={async (event) => {
         event.preventDefault();
         let modelFields = {
-          sensor_name,
+          target,
           value,
           timestamp,
         };
@@ -126,30 +147,30 @@ export default function SensorLogCreateForm(props) {
       {...rest}
     >
       <TextField
-        label="Sensor name"
+        label="Target"
         isRequired={true}
         isReadOnly={false}
-        value={sensor_name}
+        value={target}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
-              sensor_name: value,
+              target: value,
               value,
               timestamp,
             };
             const result = onChange(modelFields);
-            value = result?.sensor_name ?? value;
+            value = result?.target ?? value;
           }
-          if (errors.sensor_name?.hasError) {
-            runValidationTasks("sensor_name", value);
+          if (errors.target?.hasError) {
+            runValidationTasks("target", value);
           }
-          setSensor_name(value);
+          setTarget(value);
         }}
-        onBlur={() => runValidationTasks("sensor_name", sensor_name)}
-        errorMessage={errors.sensor_name?.errorMessage}
-        hasError={errors.sensor_name?.hasError}
-        {...getOverrideProps(overrides, "sensor_name")}
+        onBlur={() => runValidationTasks("target", target)}
+        errorMessage={errors.target?.errorMessage}
+        hasError={errors.target?.hasError}
+        {...getOverrideProps(overrides, "target")}
       ></TextField>
       <TextField
         label="Value"
@@ -164,7 +185,7 @@ export default function SensorLogCreateForm(props) {
             : parseFloat(e.target.value);
           if (onChange) {
             const modelFields = {
-              sensor_name,
+              target,
               value: value,
               timestamp,
             };
@@ -185,12 +206,14 @@ export default function SensorLogCreateForm(props) {
         label="Timestamp"
         isRequired={true}
         isReadOnly={false}
-        value={timestamp}
+        type="datetime-local"
+        value={timestamp && convertToLocal(convertTimeStampToDate(timestamp))}
         onChange={(e) => {
-          let { value } = e.target;
+          let value =
+            e.target.value === "" ? "" : Number(new Date(e.target.value));
           if (onChange) {
             const modelFields = {
-              sensor_name,
+              target,
               value,
               timestamp: value,
             };

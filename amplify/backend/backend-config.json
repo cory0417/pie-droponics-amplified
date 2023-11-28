@@ -1,6 +1,6 @@
 {
   "api": {
-    "piedroponics": {
+    "piedroponicsamplified": {
       "dependsOn": [],
       "output": {
         "authConfig": {
@@ -11,7 +11,8 @@
           ],
           "defaultAuthentication": {
             "apiKeyConfig": {
-              "apiKeyExpirationDays": 30,
+              "apiKeyExpirationDate": "2024-11-27T00:19:45.913Z",
+              "apiKeyExpirationDays": 365,
               "description": "api key description"
             },
             "authenticationType": "API_KEY"
@@ -23,7 +24,7 @@
     }
   },
   "auth": {
-    "reactamplifiedpieecbca63a": {
+    "piedroponicsamplifiedcc2cf04": {
       "customAuth": false,
       "dependsOn": [],
       "frontendAuthConfig": {
@@ -46,31 +47,6 @@
       },
       "providerPlugin": "awscloudformation",
       "service": "Cognito"
-    }
-  },
-  "hosting": {
-    "amplifyhosting": {
-      "providerPlugin": "awscloudformation",
-      "service": "amplifyhosting",
-      "type": "manual"
-    }
-  },
-  "parameters": {
-    "AMPLIFY_hosting_amplifyhosting_appId": {
-      "usedBy": [
-        {
-          "category": "hosting",
-          "resourceName": "amplifyhosting"
-        }
-      ]
-    },
-    "AMPLIFY_hosting_amplifyhosting_type": {
-      "usedBy": [
-        {
-          "category": "hosting",
-          "resourceName": "amplifyhosting"
-        }
-      ]
     }
   }
 }

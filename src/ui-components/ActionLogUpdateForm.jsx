@@ -6,15 +6,21 @@
 
 /* eslint-disable */
 import * as React from "react";
-import { Button, Flex, Grid, TextField } from "@aws-amplify/ui-react";
+import {
+  Button,
+  Flex,
+  Grid,
+  SelectField,
+  TextField,
+} from "@aws-amplify/ui-react";
 import { fetchByPath, getOverrideProps, validateField } from "./utils";
 import { API } from "aws-amplify";
-import { getSchedule } from "../graphql/queries";
-import { updateSchedule } from "../graphql/mutations";
-export default function ScheduleUpdateForm(props) {
+import { getActionLog } from "../graphql/queries";
+import { updateActionLog } from "../graphql/mutations";
+export default function ActionLogUpdateForm(props) {
   const {
     id: idProp,
-    schedule: scheduleModelProp,
+    actionLog: actionLogModelProp,
     onSuccess,
     onError,
     onSubmit,
@@ -24,52 +30,43 @@ export default function ScheduleUpdateForm(props) {
     ...rest
   } = props;
   const initialValues = {
-    actuator_name: "",
-    start_time: "",
-    period: "",
-    cmd: "",
+    target: "",
+    action: "",
     timestamp: "",
   };
-  const [actuator_name, setActuator_name] = React.useState(
-    initialValues.actuator_name
-  );
-  const [start_time, setStart_time] = React.useState(initialValues.start_time);
-  const [period, setPeriod] = React.useState(initialValues.period);
-  const [cmd, setCmd] = React.useState(initialValues.cmd);
+  const [target, setTarget] = React.useState(initialValues.target);
+  const [action, setAction] = React.useState(initialValues.action);
   const [timestamp, setTimestamp] = React.useState(initialValues.timestamp);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
-    const cleanValues = scheduleRecord
-      ? { ...initialValues, ...scheduleRecord }
+    const cleanValues = actionLogRecord
+      ? { ...initialValues, ...actionLogRecord }
       : initialValues;
-    setActuator_name(cleanValues.actuator_name);
-    setStart_time(cleanValues.start_time);
-    setPeriod(cleanValues.period);
-    setCmd(cleanValues.cmd);
+    setTarget(cleanValues.target);
+    setAction(cleanValues.action);
     setTimestamp(cleanValues.timestamp);
     setErrors({});
   };
-  const [scheduleRecord, setScheduleRecord] = React.useState(scheduleModelProp);
+  const [actionLogRecord, setActionLogRecord] =
+    React.useState(actionLogModelProp);
   React.useEffect(() => {
     const queryData = async () => {
       const record = idProp
         ? (
             await API.graphql({
-              query: getSchedule.replaceAll("__typename", ""),
+              query: getActionLog.replaceAll("__typename", ""),
               variables: { id: idProp },
             })
-          )?.data?.getSchedule
-        : scheduleModelProp;
-      setScheduleRecord(record);
+          )?.data?.getActionLog
+        : actionLogModelProp;
+      setActionLogRecord(record);
     };
     queryData();
-  }, [idProp, scheduleModelProp]);
-  React.useEffect(resetStateValues, [scheduleRecord]);
+  }, [idProp, actionLogModelProp]);
+  React.useEffect(resetStateValues, [actionLogRecord]);
   const validations = {
-    actuator_name: [{ type: "Required" }],
-    start_time: [{ type: "Required" }],
-    period: [{ type: "Required" }],
-    cmd: [{ type: "Required" }],
+    target: [{ type: "Required" }],
+    action: [{ type: "Required" }],
     timestamp: [{ type: "Required" }],
   };
   const runValidationTasks = async (
@@ -89,6 +86,29 @@ export default function ScheduleUpdateForm(props) {
     setErrors((errors) => ({ ...errors, [fieldName]: validationResponse }));
     return validationResponse;
   };
+  const convertTimeStampToDate = (ts) => {
+    if (Math.abs(Date.now() - ts) < Math.abs(Date.now() - ts * 1000)) {
+      return new Date(ts);
+    }
+    return new Date(ts * 1000);
+  };
+  const convertToLocal = (date) => {
+    const df = new Intl.DateTimeFormat("default", {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+      calendar: "iso8601",
+      numberingSystem: "latn",
+      hourCycle: "h23",
+    });
+    const parts = df.formatToParts(date).reduce((acc, part) => {
+      acc[part.type] = part.value;
+      return acc;
+    }, {});
+    return `${parts.year}-${parts.month}-${parts.day}T${parts.hour}:${parts.minute}`;
+  };
   return (
     <Grid
       as="form"
@@ -98,10 +118,8 @@ export default function ScheduleUpdateForm(props) {
       onSubmit={async (event) => {
         event.preventDefault();
         let modelFields = {
-          actuator_name,
-          start_time,
-          period,
-          cmd,
+          target,
+          action,
           timestamp,
         };
         const validationResponses = await Promise.all(
@@ -133,10 +151,10 @@ export default function ScheduleUpdateForm(props) {
             }
           });
           await API.graphql({
-            query: updateSchedule.replaceAll("__typename", ""),
+            query: updateActionLog.replaceAll("__typename", ""),
             variables: {
               input: {
-                id: scheduleRecord.id,
+                id: actionLogRecord.id,
                 ...modelFields,
               },
             },
@@ -151,142 +169,85 @@ export default function ScheduleUpdateForm(props) {
           }
         }
       }}
-      {...getOverrideProps(overrides, "ScheduleUpdateForm")}
+      {...getOverrideProps(overrides, "ActionLogUpdateForm")}
       {...rest}
     >
       <TextField
-        label="Actuator name"
+        label="Target"
         isRequired={true}
         isReadOnly={false}
-        value={actuator_name}
+        value={target}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
-              actuator_name: value,
-              start_time,
-              period,
-              cmd,
+              target: value,
+              action,
               timestamp,
             };
             const result = onChange(modelFields);
-            value = result?.actuator_name ?? value;
+            value = result?.target ?? value;
           }
-          if (errors.actuator_name?.hasError) {
-            runValidationTasks("actuator_name", value);
+          if (errors.target?.hasError) {
+            runValidationTasks("target", value);
           }
-          setActuator_name(value);
+          setTarget(value);
         }}
-        onBlur={() => runValidationTasks("actuator_name", actuator_name)}
-        errorMessage={errors.actuator_name?.errorMessage}
-        hasError={errors.actuator_name?.hasError}
-        {...getOverrideProps(overrides, "actuator_name")}
+        onBlur={() => runValidationTasks("target", target)}
+        errorMessage={errors.target?.errorMessage}
+        hasError={errors.target?.hasError}
+        {...getOverrideProps(overrides, "target")}
       ></TextField>
-      <TextField
-        label="Start time"
-        isRequired={true}
-        isReadOnly={false}
-        value={start_time}
+      <SelectField
+        label="Action"
+        placeholder="Please select an option"
+        isDisabled={false}
+        value={action}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
-              actuator_name,
-              start_time: value,
-              period,
-              cmd,
+              target,
+              action: value,
               timestamp,
             };
             const result = onChange(modelFields);
-            value = result?.start_time ?? value;
+            value = result?.action ?? value;
           }
-          if (errors.start_time?.hasError) {
-            runValidationTasks("start_time", value);
+          if (errors.action?.hasError) {
+            runValidationTasks("action", value);
           }
-          setStart_time(value);
+          setAction(value);
         }}
-        onBlur={() => runValidationTasks("start_time", start_time)}
-        errorMessage={errors.start_time?.errorMessage}
-        hasError={errors.start_time?.hasError}
-        {...getOverrideProps(overrides, "start_time")}
-      ></TextField>
-      <TextField
-        label="Period"
-        isRequired={true}
-        isReadOnly={false}
-        type="number"
-        step="any"
-        value={period}
-        onChange={(e) => {
-          let value = isNaN(parseFloat(e.target.value))
-            ? e.target.value
-            : parseFloat(e.target.value);
-          if (onChange) {
-            const modelFields = {
-              actuator_name,
-              start_time,
-              period: value,
-              cmd,
-              timestamp,
-            };
-            const result = onChange(modelFields);
-            value = result?.period ?? value;
-          }
-          if (errors.period?.hasError) {
-            runValidationTasks("period", value);
-          }
-          setPeriod(value);
-        }}
-        onBlur={() => runValidationTasks("period", period)}
-        errorMessage={errors.period?.errorMessage}
-        hasError={errors.period?.hasError}
-        {...getOverrideProps(overrides, "period")}
-      ></TextField>
-      <TextField
-        label="Cmd"
-        isRequired={true}
-        isReadOnly={false}
-        type="number"
-        step="any"
-        value={cmd}
-        onChange={(e) => {
-          let value = isNaN(parseInt(e.target.value))
-            ? e.target.value
-            : parseInt(e.target.value);
-          if (onChange) {
-            const modelFields = {
-              actuator_name,
-              start_time,
-              period,
-              cmd: value,
-              timestamp,
-            };
-            const result = onChange(modelFields);
-            value = result?.cmd ?? value;
-          }
-          if (errors.cmd?.hasError) {
-            runValidationTasks("cmd", value);
-          }
-          setCmd(value);
-        }}
-        onBlur={() => runValidationTasks("cmd", cmd)}
-        errorMessage={errors.cmd?.errorMessage}
-        hasError={errors.cmd?.hasError}
-        {...getOverrideProps(overrides, "cmd")}
-      ></TextField>
+        onBlur={() => runValidationTasks("action", action)}
+        errorMessage={errors.action?.errorMessage}
+        hasError={errors.action?.hasError}
+        {...getOverrideProps(overrides, "action")}
+      >
+        <option
+          children="On"
+          value="ON"
+          {...getOverrideProps(overrides, "actionoption0")}
+        ></option>
+        <option
+          children="Off"
+          value="OFF"
+          {...getOverrideProps(overrides, "actionoption1")}
+        ></option>
+      </SelectField>
       <TextField
         label="Timestamp"
         isRequired={true}
         isReadOnly={false}
-        value={timestamp}
+        type="datetime-local"
+        value={timestamp && convertToLocal(convertTimeStampToDate(timestamp))}
         onChange={(e) => {
-          let { value } = e.target;
+          let value =
+            e.target.value === "" ? "" : Number(new Date(e.target.value));
           if (onChange) {
             const modelFields = {
-              actuator_name,
-              start_time,
-              period,
-              cmd,
+              target,
+              action,
               timestamp: value,
             };
             const result = onChange(modelFields);
@@ -313,7 +274,7 @@ export default function ScheduleUpdateForm(props) {
             event.preventDefault();
             resetStateValues();
           }}
-          isDisabled={!(idProp || scheduleModelProp)}
+          isDisabled={!(idProp || actionLogModelProp)}
           {...getOverrideProps(overrides, "ResetButton")}
         ></Button>
         <Flex
@@ -325,7 +286,7 @@ export default function ScheduleUpdateForm(props) {
             type="submit"
             variation="primary"
             isDisabled={
-              !(idProp || scheduleModelProp) ||
+              !(idProp || actionLogModelProp) ||
               Object.values(errors).some((e) => e?.hasError)
             }
             {...getOverrideProps(overrides, "SubmitButton")}

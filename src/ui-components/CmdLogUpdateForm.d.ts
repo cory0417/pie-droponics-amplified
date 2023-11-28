@@ -22,17 +22,26 @@ export declare type ValidationResponse = {
 };
 export declare type ValidationFunction<T> = (value: T, validationResponse: ValidationResponse) => ValidationResponse | Promise<ValidationResponse>;
 export declare type CmdLogUpdateFormInputValues = {
-    cmd?: number;
-    timestamp?: string;
+    target?: string;
+    start_time?: string;
+    on_interval?: string;
+    off_interval?: string;
+    timestamp?: number;
 };
 export declare type CmdLogUpdateFormValidationValues = {
-    cmd?: ValidationFunction<number>;
-    timestamp?: ValidationFunction<string>;
+    target?: ValidationFunction<string>;
+    start_time?: ValidationFunction<string>;
+    on_interval?: ValidationFunction<string>;
+    off_interval?: ValidationFunction<string>;
+    timestamp?: ValidationFunction<number>;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type CmdLogUpdateFormOverridesProps = {
     CmdLogUpdateFormGrid?: PrimitiveOverrideProps<GridProps>;
-    cmd?: PrimitiveOverrideProps<TextFieldProps>;
+    target?: PrimitiveOverrideProps<TextFieldProps>;
+    start_time?: PrimitiveOverrideProps<TextFieldProps>;
+    on_interval?: PrimitiveOverrideProps<TextFieldProps>;
+    off_interval?: PrimitiveOverrideProps<TextFieldProps>;
     timestamp?: PrimitiveOverrideProps<TextFieldProps>;
 } & EscapeHatchProps;
 export declare type CmdLogUpdateFormProps = React.PropsWithChildren<{

@@ -1,6 +1,0 @@
-{
-  "AppSyncApiName": "piedroponics",
-  "DynamoDBBillingMode": "PAY_PER_REQUEST",
-  "DynamoDBEnableServerSideEncryption": false,
-  "AuthModeLastUpdated": "2023-11-13T22:37:26.899Z"
-}

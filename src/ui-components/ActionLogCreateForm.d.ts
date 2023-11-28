@@ -5,7 +5,7 @@
  **************************************************************************/
 
 import * as React from "react";
-import { GridProps, TextFieldProps } from "@aws-amplify/ui-react";
+import { GridProps, SelectFieldProps, TextFieldProps } from "@aws-amplify/ui-react";
 export declare type EscapeHatchProps = {
     [elementHierarchy: string]: Record<string, unknown>;
 } | null;
@@ -21,31 +21,31 @@ export declare type ValidationResponse = {
     errorMessage?: string;
 };
 export declare type ValidationFunction<T> = (value: T, validationResponse: ValidationResponse) => ValidationResponse | Promise<ValidationResponse>;
-export declare type SensorLogCreateFormInputValues = {
+export declare type ActionLogCreateFormInputValues = {
     target?: string;
-    value?: number;
+    action?: string;
     timestamp?: number;
 };
-export declare type SensorLogCreateFormValidationValues = {
+export declare type ActionLogCreateFormValidationValues = {
     target?: ValidationFunction<string>;
-    value?: ValidationFunction<number>;
+    action?: ValidationFunction<string>;
     timestamp?: ValidationFunction<number>;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
-export declare type SensorLogCreateFormOverridesProps = {
-    SensorLogCreateFormGrid?: PrimitiveOverrideProps<GridProps>;
+export declare type ActionLogCreateFormOverridesProps = {
+    ActionLogCreateFormGrid?: PrimitiveOverrideProps<GridProps>;
     target?: PrimitiveOverrideProps<TextFieldProps>;
-    value?: PrimitiveOverrideProps<TextFieldProps>;
+    action?: PrimitiveOverrideProps<SelectFieldProps>;
     timestamp?: PrimitiveOverrideProps<TextFieldProps>;
 } & EscapeHatchProps;
-export declare type SensorLogCreateFormProps = React.PropsWithChildren<{
-    overrides?: SensorLogCreateFormOverridesProps | undefined | null;
+export declare type ActionLogCreateFormProps = React.PropsWithChildren<{
+    overrides?: ActionLogCreateFormOverridesProps | undefined | null;
 } & {
     clearOnSuccess?: boolean;
-    onSubmit?: (fields: SensorLogCreateFormInputValues) => SensorLogCreateFormInputValues;
-    onSuccess?: (fields: SensorLogCreateFormInputValues) => void;
-    onError?: (fields: SensorLogCreateFormInputValues, errorMessage: string) => void;
-    onChange?: (fields: SensorLogCreateFormInputValues) => SensorLogCreateFormInputValues;
-    onValidate?: SensorLogCreateFormValidationValues;
+    onSubmit?: (fields: ActionLogCreateFormInputValues) => ActionLogCreateFormInputValues;
+    onSuccess?: (fields: ActionLogCreateFormInputValues) => void;
+    onError?: (fields: ActionLogCreateFormInputValues, errorMessage: string) => void;
+    onChange?: (fields: ActionLogCreateFormInputValues) => ActionLogCreateFormInputValues;
+    onValidate?: ActionLogCreateFormValidationValues;
 } & React.CSSProperties>;
-export default function SensorLogCreateForm(props: SensorLogCreateFormProps): React.ReactElement;
+export default function ActionLogCreateForm(props: ActionLogCreateFormProps): React.ReactElement;

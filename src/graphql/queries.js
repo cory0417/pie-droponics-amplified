@@ -10,8 +10,6 @@ export const getCmdLog = /* GraphQL */ `
       on_interval
       off_interval
       timestamp
-      createdAt
-      updatedAt
       __typename
     }
   }
@@ -30,8 +28,6 @@ export const listCmdLogs = /* GraphQL */ `
         on_interval
         off_interval
         timestamp
-        createdAt
-        updatedAt
         __typename
       }
       nextToken
@@ -46,8 +42,6 @@ export const getActionLog = /* GraphQL */ `
       target
       action
       timestamp
-      createdAt
-      updatedAt
       __typename
     }
   }
@@ -64,8 +58,6 @@ export const listActionLogs = /* GraphQL */ `
         target
         action
         timestamp
-        createdAt
-        updatedAt
         __typename
       }
       nextToken
@@ -80,8 +72,6 @@ export const getSensorLog = /* GraphQL */ `
       target
       value
       timestamp
-      createdAt
-      updatedAt
       __typename
     }
   }
@@ -98,8 +88,6 @@ export const listSensorLogs = /* GraphQL */ `
         target
         value
         timestamp
-        createdAt
-        updatedAt
         __typename
       }
       nextToken

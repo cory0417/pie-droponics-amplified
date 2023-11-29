@@ -3,7 +3,7 @@ enum Action {
   OFF
 }
 
-type CmdLog @model @auth(rules: [{allow: public}]) {
+type CmdLog @model(timestamps: null) @auth(rules: [{ allow: public }]) {
   id: ID!
   target: String!
   start_time: String!
@@ -12,14 +12,14 @@ type CmdLog @model @auth(rules: [{allow: public}]) {
   timestamp: AWSTimestamp!
 }
 
-type ActionLog @model @auth(rules: [{allow: public}]) {
+type ActionLog @model(timestamps: null) @auth(rules: [{ allow: public }]) {
   id: ID!
   target: String!
   action: Action!
   timestamp: AWSTimestamp!
 }
 
-type SensorLog @model @auth(rules: [{allow: public}]) {
+type SensorLog @model(timestamps: null) @auth(rules: [{ allow: public }]) {
   id: ID!
   target: String!
   value: Float!

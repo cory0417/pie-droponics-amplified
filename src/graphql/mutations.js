@@ -13,8 +13,6 @@ export const createCmdLog = /* GraphQL */ `
       on_interval
       off_interval
       timestamp
-      createdAt
-      updatedAt
       __typename
     }
   }
@@ -31,8 +29,6 @@ export const updateCmdLog = /* GraphQL */ `
       on_interval
       off_interval
       timestamp
-      createdAt
-      updatedAt
       __typename
     }
   }
@@ -49,8 +45,6 @@ export const deleteCmdLog = /* GraphQL */ `
       on_interval
       off_interval
       timestamp
-      createdAt
-      updatedAt
       __typename
     }
   }
@@ -65,8 +59,6 @@ export const createActionLog = /* GraphQL */ `
       target
       action
       timestamp
-      createdAt
-      updatedAt
       __typename
     }
   }
@@ -81,8 +73,6 @@ export const updateActionLog = /* GraphQL */ `
       target
       action
       timestamp
-      createdAt
-      updatedAt
       __typename
     }
   }
@@ -97,8 +87,6 @@ export const deleteActionLog = /* GraphQL */ `
       target
       action
       timestamp
-      createdAt
-      updatedAt
       __typename
     }
   }
@@ -113,8 +101,6 @@ export const createSensorLog = /* GraphQL */ `
       target
       value
       timestamp
-      createdAt
-      updatedAt
       __typename
     }
   }
@@ -129,8 +115,6 @@ export const updateSensorLog = /* GraphQL */ `
       target
       value
       timestamp
-      createdAt
-      updatedAt
       __typename
     }
   }
@@ -145,8 +129,6 @@ export const deleteSensorLog = /* GraphQL */ `
       target
       value
       timestamp
-      createdAt
-      updatedAt
       __typename
     }
   }

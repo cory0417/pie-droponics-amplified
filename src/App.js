@@ -1,4 +1,5 @@
 import { Amplify, PubSub } from 'aws-amplify';
+import {GraphQLAPI} from '@aws-amplify/api-graphql';
 import { AWSIoTProvider } from '@aws-amplify/pubsub';
 import { withAuthenticator } from '@aws-amplify/ui-react';
 import { Grid } from '@aws-amplify/ui-react';
@@ -9,6 +10,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import TopicSubscriber from './components/Dashboard/Subscriber';
 import Publisher from './components/Dashboard/Publisher';
 import Title from './components/Dashboard/Title';
+import Chart from './components/Dashboard/Chart';
+import { listSensorLogs } from './graphql/queries';
 
 Amplify.configure(awsExports);
 
@@ -24,6 +27,10 @@ Amplify.addPluggable(
   })
 );
 
+// Querying the database for sensor logs
+const logs = await GraphQLAPI.graphql({ query: listSensorLogs });
+console.log(logs.data.listSensorLogs.items); // need to consider that mqtt will not generate created and updated at fields
+
 function App({ signOut, user }) {
   return (
     <div className="App">
@@ -38,6 +45,7 @@ function App({ signOut, user }) {
         <Title user={user} signOut={signOut}/>
         <Publisher topic={PUB_TOPIC}/>
         <TopicSubscriber topic={SUB_TOPIC} PubSub={PubSub}/>
+      <Chart/>
       </Grid>
     </div>
   );

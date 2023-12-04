@@ -16,13 +16,14 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 function Publisher({ topic }) {
   const [sentMsgs, setSentMsgs] = useState([]);
   const [target, setTarget] = useState("water_pump");
-  const [startTime, setStartTime] = useState(dayjs("01-10 am", "hh-mm a"));
+  const [startTime, setStartTime] = useState(
+    dayjs("01-10-00 am", "hh-mm-ss a")
+  );
   const [onInterval, setOnInterval] = useState(dayjs("0-0-0", "H-m-s"));
   const [offInterval, setOffInterval] = useState(dayjs("0-0-0", "H-m-s"));
 
   const handleSendMsg = async () => {
     const msg = makeMsg();
-    console.log(msg);
     const newSentMsgs = [...sentMsgs, msg];
     await PubSub.publish(topic, { msg });
     setSentMsgs(newSentMsgs); // Update the state with the new message
@@ -31,7 +32,7 @@ function Publisher({ topic }) {
   const makeMsg = () => {
     let msg = {
       target: target,
-      startTime: startTime.format("HH:mm"),
+      startTime: startTime.format("HH:mm:ss"),
       onInterval: onInterval.format("HH:mm:ss"),
       offInterval: offInterval.format("HH:mm:ss"),
     };
@@ -63,7 +64,7 @@ function Publisher({ topic }) {
             label="Set start time of actuation"
             value={startTime}
             onChange={(newValue) => setStartTime(newValue)}
-            format="hh:mm a"
+            format="hh:mm:ss a"
             clearable={true}
           />
           <TimeField

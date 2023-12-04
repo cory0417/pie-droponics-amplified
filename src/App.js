@@ -16,7 +16,7 @@ import { listSensorLogs } from './graphql/queries';
 Amplify.configure(awsExports);
 
 var PUB_TOPIC = 'cmd/';
-var SUB_TOPIC = 'sensor/';
+var SUB_TOPIC = 'sensor/+/';
 
 // Apply plugin with configuration
 Amplify.addPluggable(
@@ -26,7 +26,6 @@ Amplify.addPluggable(
       'wss://a2medytrnkkh4c-ats.iot.us-east-2.amazonaws.com/mqtt'
   })
 );
-
 // Querying the database for sensor logs
 const logs = await GraphQLAPI.graphql({ query: listSensorLogs });
 console.log(logs.data.listSensorLogs.items); // need to consider that mqtt will not generate created and updated at fields

@@ -95,3 +95,32 @@ export const listSensorLogs = /* GraphQL */ `
     }
   }
 `;
+export const listSensorLogsByTimestamp = /* GraphQL */ `
+  query ListSensorLogsByTimestamp(
+    $target: String!
+    $timestamp: ModelIntKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelSensorLogFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listSensorLogsByTimestamp(
+      target: $target
+      timestamp: $timestamp
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        target
+        value
+        timestamp
+        __typename
+      }
+      nextToken
+      __typename
+    }
+  }
+`;

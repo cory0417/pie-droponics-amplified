@@ -22,6 +22,11 @@ type ActionLog @model(timestamps: null) @auth(rules: [{ allow: public }]) {
 type SensorLog @model(timestamps: null) @auth(rules: [{ allow: public }]) {
   id: ID!
   target: String!
+    @index(
+      name: "listSensorLogsByTimestamp"
+      queryField: "listSensorLogsByTimestamp"
+      sortKeyFields: ["timestamp"]
+    )
   value: Float!
   timestamp: AWSTimestamp!
 }

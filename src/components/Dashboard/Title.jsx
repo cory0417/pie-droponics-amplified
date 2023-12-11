@@ -22,7 +22,7 @@ function Title({ user, signOut }) {
             textColor={"white"}
             marginInlineStart={10}
           >
-            Welcome to Hydroponics 🌱
+            Welcome to PIE-droponics 🌱
           </Typography>
         </Grid>
         <Grid item xs={2} container alignItems={"center"} marginY={1}>

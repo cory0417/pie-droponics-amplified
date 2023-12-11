@@ -1,6 +1,6 @@
-import { listSensorLogs } from "../../graphql/queries";
+import React, { useEffect, useState } from "react";
+import { listSensorLogsByTimestamp } from "../../graphql/queries";
 import { GraphQLAPI } from "@aws-amplify/api-graphql";
-import React from "react";
 import {
   LineChart,
   Line,
@@ -11,57 +11,107 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
-import { Amplify } from "aws-amplify";
-import awsconfig from "../../aws-exports";
-import { Card, Heading } from "@aws-amplify/ui-react";
 
-Amplify.configure(awsconfig);
+const fetchSensorLogs = async (target) => {
+  try {
+    const result = await GraphQLAPI.graphql({
+      query: listSensorLogsByTimestamp,
+      variables: {
+        sortDirection: "DESC",
+        limit: 100,
+        target: target,
+      },
+    });
+    return result.data.listSensorLogsByTimestamp.items
+      .map((log) => ({
+        timestamp: new Date(log.timestamp).toLocaleTimeString(),
+        value: parseFloat(log.value).toFixed(2),
+        target: log.target,
+      }))
+      .reverse();
+  } catch (error) {
+    console.error(`Error fetching ${target} data:`, error);
+    return [];
+  }
+};
 
-// Querying the database for sensor logs
-const logs = await GraphQLAPI.graphql({ query: listSensorLogs });
-
-// Assuming logs.data.listSensorLogs.items is your data
-const data = logs.data.listSensorLogs.items
-  .map((item) => ({
-    timestamp: new Date(item.timestamp).toLocaleString(),
-    value: item.value,
-  }))
-  .sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
-
-console.log(data);
-
-function Chart() {
+const SensorLineChart = ({ data, target, color }) => {
   return (
-    <Card columnStart="3" columnEnd="5" style={{ height: "500px" }}>
-      <Heading level="2" fontWeight="regular" fontSize="2rem">
-        Sensor Data
-      </Heading>
-      <ResponsiveContainer width="100%" height="100%">
-        <LineChart
-          data={data}
-          margin={{
-            top: 5,
-            right: 30,
-            left: 20,
-            bottom: 5,
-          }}
-        >
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="timestamp" />
-          <YAxis dataKey="value" />
-          <Tooltip />
-          <Legend />
-          <Line
-            type="monotone"
-            dataKey="value"
-            stroke="#8884d8"
-            activeDot={{ r: 8 }}
-            name="Temperature"
-          />
-        </LineChart>
-      </ResponsiveContainer>
-    </Card>
+    <ResponsiveContainer width="100%" aspect={1}>
+      <LineChart
+        width={500}
+        height={300}
+        data={data}
+        syncId="anyId"
+        margin={{
+          top: 5,
+          right: 20,
+          left: 5,
+          bottom: 5,
+        }}
+      >
+        <CartesianGrid strokeDasharray="3 3" />
+        <XAxis dataKey={"timestamp"} />
+        <YAxis />
+        <Tooltip />
+        <Legend />
+        <Line
+          connectNulls
+          type="monotone"
+          dataKey="value"
+          stroke={color}
+          activeDot={{ r: 8 }}
+          name={target}
+          dot={false}
+        />
+      </LineChart>
+    </ResponsiveContainer>
   );
-}
+};
 
-export default Chart;
+const TemperatureChart = ({ subMsgs }) => {
+  const [tempLogs, setTempLogs] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await fetchSensorLogs("temperature");
+      setTempLogs(data);
+    };
+    fetchData();
+  }, [subMsgs]);
+
+  return (
+    <SensorLineChart data={tempLogs} target="Temperature" color="#8884d8" />
+  );
+};
+
+const HumidityChart = ({ subMsgs }) => {
+  const [humLogs, setHumLogs] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await fetchSensorLogs("humidity");
+      setHumLogs(data);
+    };
+    fetchData();
+  }, [subMsgs]);
+
+  return <SensorLineChart data={humLogs} target="Humidity" color="#0373fc" />;
+};
+
+const LuminanceChart = ({ subMsgs }) => {
+  const [lumLogs, setLumLogs] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await fetchSensorLogs("luminance");
+      setLumLogs(data);
+    };
+    fetchData();
+  }, [subMsgs]);
+
+  return (
+    <SensorLineChart data={lumLogs} target="Illuminance" color="#fc6603" />
+  );
+};
+export { TemperatureChart, HumidityChart, LuminanceChart };

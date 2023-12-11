@@ -13,7 +13,8 @@
     },
     "categories": {
       "auth": {
-        "piedroponicsamplifiedcc2cf04": {}
+        "piedroponicsamplifiedcc2cf04": {},
+        "userPoolGroups": {}
       },
       "api": {
         "piedroponicsamplified": {}

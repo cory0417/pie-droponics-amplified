@@ -33,7 +33,10 @@
     "resourceName": "piedroponicsamplifiedcc2cf04",
     "authSelections": "identityPoolAndUserPool",
     "useDefault": "manual",
-    "userPoolGroupList": [],
+    "userPoolGroupList": [
+      "Admins",
+      "Observers"
+    ],
     "serviceName": "Cognito",
     "usernameCaseSensitive": false,
     "useEnabledMfas": true,

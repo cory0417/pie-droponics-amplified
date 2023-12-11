@@ -1,5 +1,4 @@
 import { PubSub } from "aws-amplify";
-import { useEffect, useState } from "react";
 import {
   Card,
   ScrollView,
@@ -7,6 +6,7 @@ import {
   Heading,
   Text,
 } from "@aws-amplify/ui-react";
+import Box from "@mui/material/Box";
 
 function subscribe(callback, topic) {
   const subscription = PubSub.subscribe(topic).subscribe({
@@ -20,26 +20,9 @@ function subscribe(callback, topic) {
   };
 }
 
-function TopicSubscriber({ topic }) {
-  const [subMsgs, setSubMsgs] = useState([]);
-
-  const handleSubMsg = (payload) => {
-    console.log("Message received", payload);
-    let topic = payload.value[Object.getOwnPropertySymbols(payload.value)[0]];
-    let msg = payload.value.value;
-    setSubMsgs((prevSubMsgs) => [...prevSubMsgs, { topic: topic, msg: msg }]);
-  };
-
-  useEffect(() => {
-    const unsubscribe = subscribe(handleSubMsg, topic);
-    // Cleanup function
-    return () => {
-      unsubscribe();
-    };
-  }, [topic]); // Empty dependency array ensures that this effect runs only once during mount
-
+function TopicSubscriber({ topic, subMsgs, setSubMsgs }) {
   return (
-    <Card columnStart="3" columnEnd="5">
+    <Box>
       <Heading level="2" fontWeight="regular" fontSize="2rem">
         Subscriber
       </Heading>
@@ -72,8 +55,8 @@ function TopicSubscriber({ topic }) {
           )}
         </Collection>
       </ScrollView>
-    </Card>
+    </Box>
   );
 }
 
-export default TopicSubscriber;
+export { TopicSubscriber, subscribe };

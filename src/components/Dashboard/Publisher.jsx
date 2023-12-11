@@ -1,13 +1,8 @@
 import { PubSub } from "aws-amplify";
 import { useState } from "react";
 
-import {
-  Button,
-  Card,
-  Message,
-  Heading,
-  SelectField,
-} from "@aws-amplify/ui-react";
+import { Button, Message, Heading, SelectField } from "@aws-amplify/ui-react";
+import Grid from "@mui/material/Grid";
 import dayjs from "dayjs";
 import { TimeField } from "@mui/x-date-pickers/TimeField";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -40,8 +35,8 @@ function Publisher({ topic }) {
   };
 
   return (
-    <Card columnStart="1" columnEnd="3" rowStart="2" rowEnd="4">
-      <Card columnStart="1" columnEnd="3" rowStart="2" rowEnd="2.5">
+    <Grid container spacing={2}>
+      <Grid item>
         <Heading level="2" fontWeight="regular" fontSize="2rem">
           Publisher
         </Heading>
@@ -49,44 +44,53 @@ function Publisher({ topic }) {
           The box below can be used to publish messages back to your devices by
           publishing to the topic "<b>{topic}</b>"
         </p>
-        <SelectField
-          label="Select target actuator:"
-          value={target}
-          onChange={(newValue) => setTarget(newValue.target.value)}
-        >
-          <option value="water_pump">Water Pump</option>
-          <option value="nutrient_pump">Nutrient Pump</option>
-          <option value="led">Lights</option>
-        </SelectField>
-
+        <Grid item xs={12} display={"flex"} justifyContent={"center"}>
+          <SelectField
+            label="Select target actuator:"
+            value={target}
+            onChange={(newValue) => setTarget(newValue.target.value)}
+          >
+            <option value="water_pump">Water Pump</option>
+            <option value="nutrient_pump">Nutrient Pump</option>
+            <option value="led">Lights</option>
+          </SelectField>
+        </Grid>
         <LocalizationProvider dateAdapter={AdapterDayjs}>
-          <TimeField
-            label="Set start time of actuation"
-            value={startTime}
-            onChange={(newValue) => setStartTime(newValue)}
-            format="hh:mm:ss a"
-            clearable={true}
-          />
-          <TimeField
-            label="Set on-interval"
-            value={onInterval}
-            onChange={(newValue) => setOnInterval(newValue)}
-            format="H:m:s"
-            clearable={true}
-          />
-          <TimeField
-            label="Set off-interval"
-            value={offInterval}
-            onChange={(newValue) => setOffInterval(newValue)}
-            format="H:m:s"
-            clearable={true}
-          />
+          <Grid item xs={12} display={"flex"} justifyContent={"center"}>
+            <TimeField
+              label="Set start time of actuation"
+              value={startTime}
+              onChange={(newValue) => setStartTime(newValue)}
+              format="hh:mm:ss a"
+              clearable={true}
+            />
+          </Grid>
+          <Grid item xs={12} display={"flex"} justifyContent={"center"}>
+            <TimeField
+              label="Set on-interval"
+              value={onInterval}
+              onChange={(newValue) => setOnInterval(newValue)}
+              format="H:m:s"
+              clearable={true}
+            />
+          </Grid>
+          <Grid item xs={12} display={"flex"} justifyContent={"center"}>
+            <TimeField
+              label="Set off-interval"
+              value={offInterval}
+              onChange={(newValue) => setOffInterval(newValue)}
+              format="H:m:s"
+              clearable={true}
+            />
+          </Grid>
         </LocalizationProvider>
-        <Button className="btn btn-primary" onClick={() => handleSendMsg()}>
-          Publish Message
-        </Button>
-      </Card>
-      <Card columnStart="1" columnEnd="3" rowStart="2.5" rowEnd="4">
+        <Grid item xs={12}>
+          <Button className="btn btn-primary" onClick={() => handleSendMsg()}>
+            Publish Message
+          </Button>
+        </Grid>
+      </Grid>
+      <Grid item xs={12}>
         <h3>Sent Messages:</h3>
         <p>Your sent messages will appear here</p>
         <Message id="sentMsg" variation="filled" heading="Sent Message">
@@ -94,8 +98,8 @@ function Publisher({ topic }) {
             <div key={index}>{msg}</div>
           ))}
         </Message>
-      </Card>
-    </Card>
+      </Grid>
+    </Grid>
   );
 }
 

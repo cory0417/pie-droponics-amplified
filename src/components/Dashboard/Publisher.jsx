@@ -8,7 +8,7 @@ import { TimeField } from "@mui/x-date-pickers/TimeField";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 
-function Publisher({ topic }) {
+function Publisher({ topic, isAdmin }) {
   const [sentMsgs, setSentMsgs] = useState([]);
   const [target, setTarget] = useState("water_pump");
   const [startTime, setStartTime] = useState(
@@ -85,10 +85,18 @@ function Publisher({ topic }) {
           </Grid>
         </LocalizationProvider>
         <Grid item xs={12}>
-          <Button className="btn btn-primary" onClick={() => handleSendMsg()}>
+          <Button
+            className="btn btn-primary"
+            onClick={() => handleSendMsg()}
+            isDisabled={!isAdmin}
+          >
             Publish Message
           </Button>
         </Grid>
+        <Message variation="filled" colorTheme="info">
+          Only admins can publish messages. You can still view messages if you
+          are not an admin.
+        </Message>
       </Grid>
       <Grid item xs={12}>
         <h3>Sent Messages:</h3>

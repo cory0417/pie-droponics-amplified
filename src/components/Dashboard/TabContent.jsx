@@ -44,13 +44,13 @@ const SensorTab = ({ subMsgs }) => {
   );
 };
 
-const MQTTTab = ({ subMsgs, setSubMsgs }) => {
+const MQTTTab = ({ subMsgs, setSubMsgs, isAdmin }) => {
   return (
     <Grid container spacing={2}>
       <Grid item xs={6}>
         <Box display="flex" flexDirection={"row"} margin={5}>
           <Item>
-            <Publisher topic={PUB_TOPIC} />
+            <Publisher topic={PUB_TOPIC} isAdmin={isAdmin} />
           </Item>
         </Box>
       </Grid>

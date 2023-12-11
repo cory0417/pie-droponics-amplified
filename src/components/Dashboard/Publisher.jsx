@@ -56,7 +56,13 @@ function Publisher({ topic, isAdmin }) {
           </SelectField>
         </Grid>
         <LocalizationProvider dateAdapter={AdapterDayjs}>
-          <Grid item xs={12} display={"flex"} justifyContent={"center"}>
+          <Grid
+            item
+            xs={12}
+            display={"flex"}
+            justifyContent={"center"}
+            marginY={1}
+          >
             <TimeField
               label="Set start time of actuation"
               value={startTime}
@@ -65,7 +71,13 @@ function Publisher({ topic, isAdmin }) {
               clearable={true}
             />
           </Grid>
-          <Grid item xs={12} display={"flex"} justifyContent={"center"}>
+          <Grid
+            item
+            xs={12}
+            display={"flex"}
+            justifyContent={"center"}
+            marginY={1}
+          >
             <TimeField
               label="Set on-interval"
               value={onInterval}
@@ -74,7 +86,13 @@ function Publisher({ topic, isAdmin }) {
               clearable={true}
             />
           </Grid>
-          <Grid item xs={12} display={"flex"} justifyContent={"center"}>
+          <Grid
+            item
+            xs={12}
+            display={"flex"}
+            justifyContent={"center"}
+            marginY={1}
+          >
             <TimeField
               label="Set off-interval"
               value={offInterval}
@@ -84,7 +102,7 @@ function Publisher({ topic, isAdmin }) {
             />
           </Grid>
         </LocalizationProvider>
-        <Grid item xs={12}>
+        <Grid item xs={12} marginY={1}>
           <Button
             className="btn btn-primary"
             onClick={() => handleSendMsg()}
